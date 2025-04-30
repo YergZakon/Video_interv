@@ -1,4 +1,4 @@
-streamlit==1.29.0
+streamlit
 opencv-python==4.8.1
 openai-whisper==20231117
 librosa==0.10.1
