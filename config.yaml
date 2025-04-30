@@ -1,0 +1,30 @@
+# Конфигурация приложения мультимодального анализа
+
+# Параметры видео
+video:
+  width: 640
+  height: 480
+  fps: 30
+  face_confidence: 0.5
+  pose_confidence: 0.5
+
+# Параметры аудио
+audio:
+  sample_rate: 16000
+  chunk_size: 1024
+  channels: 1
+  whisper_model: "tiny"  # Доступные модели: tiny, base, small, medium, large
+
+# Параметры анализа
+analysis:
+  face_distortion_threshold: 0.1
+  voice_pitch_deviation_threshold: 0.15
+  voice_intensity_deviation_threshold: 0.2
+  sync_threshold: 1.0  # секунды
+  analysis_interval: 0.5  # секунды
+
+# Интерфейс
+ui:
+  title: "Мультимодальный анализ ответов"
+  max_chart_points: 50
+  update_interval: 0.1  # секунды 
