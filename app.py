@@ -8,6 +8,7 @@ import queue
 import os
 from pathlib import Path
 import matplotlib.pyplot as plt
+import yaml
 
 from modules.video_analyzer import VideoAnalyzer
 from modules.audio_analyzer import AudioAnalyzer
@@ -89,8 +90,15 @@ def multimodal_analysis_thread(integrator):
 # Инициализация анализаторов
 @st.cache_resource
 def init_analyzers():
+    # Загрузка конфигурации
+    with open("config.yaml", "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+    audio_config = config.get("audio", {})
+    whisper_model = audio_config.get("whisper_model", "tiny")
+    whisper_language = audio_config.get("whisper_language", "ru")
+
     video_analyzer = VideoAnalyzer()
-    audio_analyzer = AudioAnalyzer(model_size="tiny")  # Используем меньшую модель для быстроты
+    audio_analyzer = AudioAnalyzer(model_size=whisper_model, language=whisper_language)  # Передаем параметры модели и языка
     integrator = MultimodalIntegrator(video_analyzer, audio_analyzer)
     
     # Создаем папку для вопросов, если она не существует

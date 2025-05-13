@@ -13,7 +13,8 @@ audio:
   sample_rate: 16000
   chunk_size: 1024
   channels: 1
-  whisper_model: "tiny"  # Доступные модели: tiny, base, small, medium, large
+  whisper_model: "large"  # Доступные модели: tiny, base, small, medium, large
+  whisper_language: "ru"  # Язык для Whisper (например, ru, en)
 
 # Параметры анализа
 analysis:

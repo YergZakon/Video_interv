@@ -3,12 +3,15 @@ import numpy as np
 import whisper
 import librosa
 import parselmouth
+import torch
 from parselmouth.praat import call
 
 class AudioAnalyzer:
-    def __init__(self, sample_rate=16000, model_size="base"):
+    def __init__(self, sample_rate=16000, model_size="large", language="ru"):
         self.sample_rate = sample_rate
-        self.model = whisper.load_model(model_size)
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model = whisper.load_model(model_size, device=self.device)
+        self.language = language
         self.buffer = []
         self.lock = threading.Lock()
         self.baseline_pitch = None
@@ -36,7 +39,7 @@ class AudioAnalyzer:
         audio_data_float = audio_data.astype(np.float32) / 32768.0
         
         try:
-            result = self.model.transcribe(audio_data_float)
+            result = self.model.transcribe(audio_data_float, language=self.language)
             results['text'] = result["text"]
         except Exception as e:
             print(f"Error transcribing speech: {e}")
